@@ -12,9 +12,13 @@
 
 <body>
 
+ <div class="container">
+            <div class="row">
+            <br><br>
+                <div class="col-md-12 col-md-offset-3">
  	<div class="form-container">
  	
- 	<h1>New User Registration Form</h1>
+ 	<h1 align="center">Create New Account!</h1>
  	
 	<form:form method="POST" modelAttribute="user" class="form-horizontal">
 
@@ -77,13 +81,53 @@
 				</div>
 			</div>
 		</div>
+		
+		<div class="row">
+			<div class="form-group col-md-12">
+				<label class="col-md-3 control-lable" for="userGroup">Role</label>
+				<div class="col-md-7">
+					<form:select path="designation"  class="form-control">
+					  	<form:option value="Admin">Admin</form:option>
+					  	<form:option value="Developer">Developer</form:option>
+						<form:option value="Student">Student</form:option>
+					</form:select>
+					<div class="has-error">
+						<form:errors path="emailId" class="help-inline"/>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="form-group col-md-12">
+				<label class="col-md-3 control-lable" for="userGroup">UserGroup</label>
+				<div class="col-md-7">
+					<form:select path="userGroup"  class="form-control">
+					  	<form:option value="DAC">DAC</form:option>
+					  	<form:option value="DMC">DMC</form:option>
+						<form:option value="DGI">DGI</form:option>
+					</form:select>
+					<div class="has-error">
+						<form:errors path="emailId" class="help-inline"/>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<div class="row">
-			<div class="form-actions floatRight">
-				<input type="submit" value="Register" class="btn btn-primary btn-sm"> or <a href="<c:url value='/admin' />">Cancel</a>
+			<div class="form-group col-md-12">
+			<div class="col-md-3">
+			</div>
+			<div class="col-md-7">
+				<input type="submit" value="Register" class="btn btn-primary btn-sm"> or
+				<a href="<c:url value='/' />">Cancel</a>
+			</div>
 			</div>
 		</div>
 	</form:form>
+	</div>
+	</div>
+	</div>
 	</div>
 </body>
 </html>

@@ -26,6 +26,7 @@ public class UserDetailsRowMapper implements RowMapper<UserDetails> {
 		userDetails.setDateOfBirth(rs.getDate("DOB"));
 		userDetails.setAddress(rs.getString("ADDRESS"));
 		userDetails.setAge(rs.getInt("AGE"));
+		userDetails.setUserGroup(rs.getString("USERGROUP"));
 		
 		return userDetails;
 	}

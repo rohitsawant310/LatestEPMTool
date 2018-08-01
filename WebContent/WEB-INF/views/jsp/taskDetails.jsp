@@ -43,19 +43,8 @@
 
 			<ul class="nav navbar-right navbar-top-links">
 
-				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
-						UserName<b class="caret"></b>
-				</a>
-					<ul class="dropdown-menu dropdown-user">
-						<li><a href="#"><i class="fa fa-user fa-fw"></i> User
-								Profile</a></li>
-						<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-						</li>
-						<li class="divider"></li>
-						<li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i>
+					<li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i>
 								Logout</a></li>
-					</ul></li>
 			</ul>
 			<!-- /.navbar-top-links -->
 
@@ -76,12 +65,13 @@
 		<div class="row">
 		<div class="col-md-12">
 					<h3 class="page-header" style="text-align: center;">TASK DETAILS</h3>
-				</div>
-			<div class="col-md-12" style="border: 1px tdin rgb(86, 180, 239); box-shadow: 0px 1px 3px #B7B2B2 inset, 0px 0px 8px #B7B2B2; overflow-x: auto;">
+		</div>
+			<div id="tableData" class="col-md-12" style="border: 1px tdin rgb(86, 180, 239); box-shadow: 0px 1px 3px #B7B2B2 inset, 0px 0px 8px #B7B2B2; overflow-x: auto;">
 			<br>
 				<table class="table table-bordered" style="font-size: 13.5px;">
 					<thead>
 						<tr style="background-color: #1a2732;">
+							<th style="width: 5%"><font color="white"></font></th>
 							<th style="width: 5%"><font color="white">TASK NO.</font></th>
 							<th style="width: 5%"><font color="white">OWNER_ID</font></th>
 							<th style="width: 8%"><font color="white">TASK NAME </font></th>
@@ -97,6 +87,16 @@
 					<tbody>
 						<c:forEach items="${task}" var="taskDetails">
 					    <tr>
+					    	<td >
+					    		<c:choose>
+								    <c:when test="${taskDetails.taskStatus != 'Closed' || userDesignation == 'Admin'}">
+								      <a href="updateTask?taskId=${taskDetails.id}"><i class="fa fa-edit" style="font-size:35px;color:orange" ></i></a>
+								    </c:when>
+								    <c:otherwise>
+								      <a ><i class="fa fa-edit" style="font-size:35px;color:black" ></i></a>
+								    </c:otherwise>
+								 </c:choose>
+					    	</td>
 					        <td>${taskDetails.id}</td>
 							<td>${taskDetails.ownerUserId}</td>
 							<td>${taskDetails.taskName}</td>
@@ -111,6 +111,11 @@
 					</tbody>
 				</table>
 		</div>
+		<div class="col-md-12" id="loading" style="display:none">
+			<div class="col-md-12" style="text-align: center;font-size:45px;color:orange">
+			<i class="fa fa-spinner fa-spin"></i>Updating Data...
+			</div>
+		</div>
 		</div>
 		</div>
 	</div>
@@ -119,19 +124,40 @@
 	</div>
 	<!-- /#wrapper -->
 
+	<script src="resources/js/jquery.min.js">
+	
+	</script>
+
+
 	<!-- jQuery -->
-	<script src="resources/js/jquery.min.js"></script>
+	<script>
+	function updateTaskData(taskId) {
+		document.getElementById("tableData").style.display="none";
+		document.getElementById("loading").style.display="block";
+		$
+        .ajax({
+            contentType : "application/json",
+            url : "callUpdateTask?taskId="+taskId,
+            dataType : 'JSON',
+            type : 'GET',
+            //timeout : 10000,
+            success : function(response){
+            	document.getElementById("tableData").style.display="block";
+            	document.getElementById("loading").style.display="none";
+            },
+            error : function() {
+                alert('Error');
+            }
+        });
+		
+    };
+	</script>
 
 	<!-- Bootstrap Core JavaScript -->
 	<script src="resources/js/bootstrap.min.js"></script>
 
 	<!-- Metis Menu Plugin JavaScript -->
 	<script src="resources/js/metisMenu.min.js"></script>
-
-	<!-- Morris Charts JavaScript -->
-	<script src="resources/js/raphael.min.js"></script>
-	<script src="resources/js/morris.min.js"></script>
-	<script src="resources/js/morris-data.js"></script>
 
 	<!-- Custom Theme JavaScript -->
 	<script src="resources/js/startmin.js"></script>

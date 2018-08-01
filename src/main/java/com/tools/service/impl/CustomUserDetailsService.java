@@ -36,7 +36,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 	private List<GrantedAuthority> getGrantedAuthorities(com.tools.beans.UserDetails userDetails) {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-		System.out.print("authorities :" + authorities);
 		return authorities;
 	}
 

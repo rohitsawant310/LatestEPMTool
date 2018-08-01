@@ -204,6 +204,41 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Top 5 tasks Order by points earned
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>TaskName</th>
+                                                <th>OwnerId</th>
+                                                <th>GroupId</th>
+                                                <th>Poitns</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach items="${TopFiveTasks}" var="taskDetails">
+                                       		 <tr class="warning">
+                                                <td>${taskDetails.taskName}</td>
+                                                <td>${taskDetails.ownerUserId}</td>
+                                                <td>${taskDetails.ownerGroupId}</td>
+                                                <td>${taskDetails.points}</td>
+                                            </tr>
+                                		</c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.table-responsive -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
                 </div>
             </div>
             <!-- /#page-wrapper -->

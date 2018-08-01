@@ -9,9 +9,11 @@
 
 	<http auto-config="true">
 		<intercept-url pattern="/home" access="hasRole('ADMIN')"  />
+		<intercept-url pattern="/newTask" access="hasRole('ADMIN')" />
 		<intercept-url pattern="/" access="hasRole('ADMIN')" />
-		<intercept-url pattern="/newuser"
-			access="hasRole('ADMIN')" />
+		<intercept-url pattern="/newuser" access="hasRole('ADMIN')" />
+		<intercept-url pattern="/taskDetails" access="hasRole('ADMIN')" />
+		<intercept-url pattern="/updateTask" access="hasRole('ADMIN')" />
 		<intercept-url pattern="/db/**"
 			access="hasRole('ADMIN') and hasRole('DBA')" />
 

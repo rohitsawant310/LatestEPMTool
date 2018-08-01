@@ -55,8 +55,17 @@ public class TaskDetailsDaoImpl implements TaskDetailsDao {
 	}
 
 	@Override
-	public List<Tasks> getAllTasks() {
-		List<Tasks> taskDetails =(List<Tasks>) jdbcTemplate.query("SELECT * FROM TASKS", new TaskDetailsRowMapper());
+	public List<Tasks> getAllTasks(String userId,String userGroup,String userDesignation) {
+		System.out.println("Data***"+userId+"-"+userGroup+"-"+userDesignation);
+		List<Tasks> taskDetails=null;
+		if("ADMIN".equalsIgnoreCase(userDesignation)) {
+			taskDetails =(List<Tasks>) jdbcTemplate.query("SELECT * FROM TASKS", new TaskDetailsRowMapper());
+		}else {
+			taskDetails =(List<Tasks>) jdbcTemplate.query("SELECT * FROM TASKS where OWNER_USERID=? ",new Object[] {userId}, new TaskDetailsRowMapper());
+		}
+		
+		System.out.println(taskDetails);
+		
 		return taskDetails;
 	}
 
@@ -68,8 +77,9 @@ public class TaskDetailsDaoImpl implements TaskDetailsDao {
 
 	@Override
 	public Tasks getTaskById(Integer taskId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Tasks task=(Tasks)jdbcTemplate.queryForObject("SELECT * FROM TASKS where id= ? ",new Object[] {taskId}, new TaskDetailsRowMapper());
+		return task;
 	}
 	
 	@Override
@@ -107,7 +117,7 @@ public class TaskDetailsDaoImpl implements TaskDetailsDao {
 
 	@Override
 	public Map<String, Integer> getTaskWiseTotalWork() {
-		Map<String,Integer> taskStats=jdbcTemplate.query("select TASKTYPE,count(1) COUNT from TASKS group by TASKTYPE", new ResultSetExtractor<Map>(){
+		Map<String,Integer> taskStats=jdbcTemplate.query("select TASKTYPE,count(1) COUNT from TASKS group by TASKTYPE", new ResultSetExtractor<Map<String,Integer>>(){
 		    @Override
 		    public Map extractData(ResultSet rs) throws SQLException,DataAccessException {
 		        HashMap<String,Integer> mapRet= new HashMap<String,Integer>();
@@ -118,6 +128,22 @@ public class TaskDetailsDaoImpl implements TaskDetailsDao {
 		    }
 		});
 	return taskStats;
+	}
+
+	@Override
+	public int updateTaskData(Tasks taskData) {
+
+		String sql = "UPDATE TASKS SET TASKNAME=? ,TASKTYPE=?,TASKDESC=?,TASK_UPDATEDATE=?,TASK_CLOSEDDATE=?,TASK_COMMITDATE=?,"
+				+ " TASK_STATUS = ?, OWNER_USERID= ? , POINTS= ? WHERE ID = ?";
+		int resp = jdbcTemplate.update(sql,
+				new Object[] { taskData.getTaskName(),taskData.getTaskType(),taskData.getTaskDescription(),new Date(),taskData.getTaskClosedDate(),taskData.getTaskCommitDate(),taskData.getTaskStatus(),taskData.getOwnerUserId(),taskData.getPoints(),taskData.getId()});
+	
+		return resp;
+	}
+
+	@Override
+	public List<Tasks> getTopFiveTasksByPoints() {		
+		return (List<Tasks>) jdbcTemplate.query("SELECT * from TASKS where POINTS is not null order by POINTS desc LIMIT 5", new TaskDetailsRowMapper());
 	}
 
 }

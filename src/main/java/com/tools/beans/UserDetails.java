@@ -16,6 +16,7 @@ public class UserDetails {
 	private Date dateOfBirth;
 	private String address;
 	private Integer age;
+	private String userGroup;
 	
 	public Integer getId() {
 		return id;
@@ -89,11 +90,17 @@ public class UserDetails {
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
+	public String getUserGroup() {
+		return userGroup;
+	}
+	public void setUserGroup(String userGroup) {
+		this.userGroup = userGroup;
+	}
 	@Override
 	public String toString() {
 		return "UserDetails [id=" + id + ", userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", password=" + password + ", enabled=" + enabled + ", designation=" + designation + ", organization="
-				+ organization + ", dateOfBirth=" + dateOfBirth + ", address=" + address + ", age=" + age + "]";
+				+ ", emailId=" + emailId + ", password=" + password + ", enabled=" + enabled + ", designation="
+				+ designation + ", organization=" + organization + ", dateOfBirth=" + dateOfBirth + ", address="
+				+ address + ", age=" + age + ", userGroup=" + userGroup + "]";
 	}
-	
 }

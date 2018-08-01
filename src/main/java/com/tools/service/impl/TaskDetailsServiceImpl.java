@@ -28,8 +28,8 @@ public class TaskDetailsServiceImpl implements TaskDetailsService {
 	}
 
 	@Override
-	public List<Tasks> getAllTasks() {
-		return taskDetailsDao.getAllTasks();
+	public List<Tasks> getAllTasks(String userId,String userGroup,String userDesignation) {
+		return taskDetailsDao.getAllTasks(userId,userGroup,userDesignation);
 	}
 
 	@Override
@@ -55,5 +55,17 @@ public class TaskDetailsServiceImpl implements TaskDetailsService {
 	@Override
 	public Map<String, Integer> getTaskWiseTotalWork() {
 		return taskDetailsDao.getTaskWiseTotalWork();
+	}
+
+	@Override
+	public int updateTaskData(Tasks taskData) {
+		Integer points=projectUtility.calculatePointsForTask(taskData);
+		taskData.setPoints(points);
+		
+		return taskDetailsDao.updateTaskData(taskData);
+	}
+	@Override
+	public List<Tasks> getTopFiveTasksByPoints() {
+		return taskDetailsDao.getTopFiveTasksByPoints();
 	}
 }

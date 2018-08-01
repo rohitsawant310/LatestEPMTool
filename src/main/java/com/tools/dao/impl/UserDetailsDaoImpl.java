@@ -62,6 +62,7 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 		parameters.put("DOB", userDetails.getDateOfBirth());
 		parameters.put("ADDRESS", userDetails.getAddress());
 		parameters.put("AGE", userDetails.getAge());
+		parameters.put("USERGROUP", userDetails.getUserGroup());
 
 		Number insertedId = simpleJdbcInsert.executeAndReturnKey(parameters);
 		return insertedId.intValue();
